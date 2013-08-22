@@ -1,0 +1,78 @@
+{% extends "urltree/urltree_base.html" %}
+
+{% load i18n mptt_tags %}
+
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}<div class="breadcrumbs">
+    {% if not query.pop %}
+        <a href="/admin">{% trans "Home" %}</a> &rsaquo;
+    {% endif %}
+    urltree-build
+    </div>
+{% endblock %}
+
+<!-- STYLESHEETS -->
+{% block extrastyle %}
+    {{ block.super }}
+    <style type="text/css" media="screen">
+      #loading { height: 16px; width: 16px; background-image: url('{{ STATIC_URL }}urltree/img/loading.gif'); background-size: 16px 16px; margin: 0 0 10px 10px; }
+    </style>
+{% endblock %}
+
+
+<!-- CONTENT -->
+{% block content %}
+<div id="content-main">
+
+    <div class="module filtered" id="changelist">
+      
+      <p>Domain: {{ domain }}<p>
+      <p>Start: {{ starttime }}</p>
+      
+      <div id="ajax-polls">{# AJAX-POLLS come here #}</div>
+      
+      <div id="loading"></div>
+      
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+$polls = $('#ajax-polls');
+var BREAK = true //false;
+
+get_processing_log = function() {
+  var jqxhr = $.get('{% url get_logging %}')
+    .done(function(data) {
+      var value = data.value
+      for (var line in value) {
+        $polls.append('<p>'+ value[line] +'</p>');
+      }
+      if (BREAK == false)
+        setTimeout(get_processing_log, 500);
+      else
+        $('#loading').hide();
+    })
+    .fail(function() { 
+      $polls.append('<p>Error URL-getting</p>'); 
+      BREAK = true;
+    });
+};
+
+process_nodes = function() {
+  var jqxhr = $.get('{% url urltree-process domain %}')
+    .always(function(data) {
+      BREAK = true;
+    });
+};
+
+$(function() {
+  
+  process_nodes();
+  get_processing_log();
+  
+});
+</script>
+
+{% endblock %}
+

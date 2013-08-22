@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+
+<!-- LOADING -->
+{% load i18n mptt_tags %}
+
+<!-- STYLESHEETS -->
+{% block extrastyle %}
+    {{ block.super }}
+{% endblock %}
+
+<!-- JAVASCRIPTS -->
+{% block extrahead %}
+    {{ block.super }}
+    <script language="javascript" type="text/javascript" src="{{ settings_var.JQUERY_URL }}"></script>
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS -->
+{% block coltype %}flex{% endblock %}
+{% block bodyclass %}change-list{% if query.pop %} popup{% endif %}{% endblock %}
+
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}<div class="breadcrumbs">
+    {% if not query.pop %}
+        <a href="/admin">{% trans "Home" %}</a> &rsaquo;
+    {% endif %}
+    {{ urltree }}
+    </div>
+{% endblock %}
+
+{% block content_title %}{% endblock %}

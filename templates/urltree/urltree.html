@@ -1,0 +1,56 @@
+{% extends "urltree/urltree_base.html" %}
+
+{% load i18n mptt_tags %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" charset="utf-8">
+      var current_site = '{{ current_site }}';
+    </script>
+    <script language="javascript" type="text/javascript" src="{{ settings_var.URLTREE_POPUP_JS_URL }}"></script>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ settings_var.URLTREE_POPUP_CSS_URL }}" />
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+<div id="content-main">
+    {% block object-tools %}
+    <ul class="object-tools">
+        <li><a href="{% url urltree-build %}" class="focus">{% trans "Rebuild Tree" %}</a></li>
+    </ul>
+    {% endblock %}
+    
+    <div class="module filtered" id="changelist">
+      {% for urltree in urltrees %}
+        <ul class="root">
+            {% recursetree urltree.nodes.all %}
+                <li>
+                    {% if not node.is_leaf_node %}
+                    <a href="#" class="node closed">
+                        <span class="icon">&#9658;</span>
+                      {{ node.url }}
+                    </a>
+                    {% else %}
+                      {{ node.url }}
+                    {% endif %} 
+                    <a href="{{ node.url }}" target="newWindow">
+                      <button class="button">{% trans "Open in Browser" %}</button></a>
+                    {% ifequal query.pop '1' %}<button class="button" onclick="UrlSubmit('{{ node.url }}');">{% trans "Select" %}</button>{% endifequal %}
+                  
+                    {% if not node.is_leaf_node %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

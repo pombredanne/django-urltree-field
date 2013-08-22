@@ -1,0 +1,6 @@
+ul.children { display: none; }
+ul.children li, ul.root li { list-style: none; }
+
+ul.object-tools { position: absolute; top: 5px; right: 5px; margin: 0; }
+
+#content-main { position: relative; }
