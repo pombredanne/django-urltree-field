@@ -7,7 +7,7 @@ Creates a tree of URL-Nodes by crawling a website, which can be accessed in mode
 Installation
 ------------
 
-#. pip install -e git@github.com:ralfzen/django-urltree-field.git
+#. pip install -e git://github.com/ralfzen/django-urltree-field.git#egg=urltree
 
 #. Add ``urltree`` to your INSTALLED_APPS._
 
