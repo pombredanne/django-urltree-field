@@ -3,7 +3,7 @@ from django.db import models
 from django.forms.widgets import Input
 from django.db.models.fields import CharField
 from django.template.loader import render_to_string
-from urltree.default_settings import *
+from urltree.settings import *
 
 
 class UrlTreeBrowseWidget(Input):
