@@ -16,8 +16,8 @@ class URLTree(models.Model):
         verbose_name=_(u'Erstellt am'))
     
     def save(self, *args, **kwargs):
-        self.domain = self.domain.lstrip('http://')
-        self.domain = self.domain.strip('/')
+        if self.domain.startswith('http://'):
+            self.domain = self.domain.lstrip('http://')
         super(URLTree, self).save(*args, **kwargs)
     
     class Meta:
