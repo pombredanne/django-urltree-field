@@ -4,12 +4,9 @@ from urltree.logger import logger
 from urltree.models import URLNode
 
 
-def normalize_url(url):
+def get_host(url):
     parsedUrl = urlparse.urlparse(url)
-    if parsedUrl.port == 80:
-        hostUrl = parsedUrl.netloc[:-3] # because ':80' is defaultPort
-    else:
-        hostUrl = parsedUrl.netloc
+    hostUrl = parsedUrl.netloc
     logger.debug('hostUrl: %s ' % hostUrl)
     return hostUrl
     

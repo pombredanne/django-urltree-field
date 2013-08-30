@@ -13,7 +13,7 @@ from django.conf import settings as django_settings
 from urltree.models import URLTree, URLNode
 from urltree import settings
 from urltree.logger import logger
-from urltree.helpers import normalize_url, save_links_to_nodes
+from urltree.helpers import get_host, save_links_to_nodes
 from django.template.defaultfilters import force_escape as escape
 
 
@@ -107,7 +107,7 @@ def process_nodes(request, domain):
             parsedUrl = urlparse.urlparse(absUrl)
             logger.debug('href: %s | absURL: %s | parsedUrl: %s' % (a_elem['href'], absUrl, parsedUrl))
             
-            hostUrl = normalize_url(absUrl)
+            hostUrl = get_host(absUrl)
             
             absUrl = urlparse.urlunparse((parsedUrl.scheme, hostUrl, parsedUrl.path,
                         parsedUrl.params, parsedUrl.query, parsedUrl.fragment))
