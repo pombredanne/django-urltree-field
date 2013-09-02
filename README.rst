@@ -13,6 +13,8 @@ Installation
 
 #. Add ``url(r'^', include('urltree.urls')),`` to your ``project.urls.py``.
 
+#. Run the migrations or syncdb.
+
 #. Deploy the necessary static files. If you are using Django 1.3 and ``contrib.staticfiles`` the 
    necessary static files should be picked up automatically. In all other cases you have to copy or
    symlink the static files.

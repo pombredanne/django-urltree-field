@@ -22,6 +22,8 @@ MAX_TIMEOUT_TIME = 5
 
 # unfortunately you need to run 2 development-servers because 2 parallel or do a subprocess-crawl ...
 
+# optimization for unresolved breaks: step by X urls and give logging-feedback + set-parents-button/view
+
 def build_tree(request, domain=None):
     """ makes tree from ´´links´´ (=list)
     No resume, but rebuild.
